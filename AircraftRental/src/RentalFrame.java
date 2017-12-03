@@ -61,9 +61,10 @@ public class RentalFrame extends JFrame{
 					String startTime = startTimeInput.getText();
 					String endTime = endTimeInput.getText();
 					String flightDate = flightDateInput.getText();
+					String airCraft = (String) comboBox.getSelectedItem();
 
 					if (solo.isSelected()){
-						FlyingSolo fs = new FlyingSolo(name,startTime,endTime,flightDate);
+						FlyingSolo fs = new FlyingSolo(name,startTime,endTime,flightDate, airCraft);
 						fs.calculate();
 						try {
 							manager.add(fs);
@@ -72,7 +73,7 @@ public class RentalFrame extends JFrame{
 						}
 					}
 					else if (withInstructor.isSelected()){
-						WithInstructor wi = new WithInstructor(name,startTime,endTime,flightDate);
+						WithInstructor wi = new WithInstructor(name,startTime,endTime,flightDate, airCraft);
 						wi.calculate();
 						try {
 							manager.add(wi);
@@ -89,6 +90,19 @@ public class RentalFrame extends JFrame{
 				}
 			}
 			else if (event.getSource() == history) {
+				if(!searchInput.getText().equals("")) {
+					
+					ArrayList<String> searchResults = new ArrayList<String>();
+					try {
+						searchResults = manager.search(searchInput.getText());
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+					details.setText(searchResults.toString());
+					
+				}
+				else JOptionPane.showMessageDialog(null, "Input something to search");
+				
 			}
 		}
 	}
@@ -128,12 +142,8 @@ public class RentalFrame extends JFrame{
 		nameInput=new JTextField(20);
 //		nameInput.addActionListener(handler);
 		
-		history = new JButton("Previous Rentals");
-		history.addActionListener(handler);
-		
 		panel1.add(name);
 		panel1.add(nameInput);
-		panel1.add(history);
 		
 		return panel1;
 	}
