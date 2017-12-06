@@ -6,4 +6,4 @@ test5,2:00,5:00,2/3/4,aircraft1,1.0,Flying Solo
 test6,1:00,7:00,2/3/4,aircraft2,1.0,Flying Solo
 test7,2:00,3:00,2/3/4,aircraft3,1.0,Flying Solo
 test8,3:00,4:00,2/3/4,aircraft4,1.0,Flying Solo
-test9,5:00,6:00,2/3/4,aircraft5,1.0,Flying Solo
+test9,5:00,6:00,2/3/4,aircraft5,1.0,Flying SoloTamanna,00:00,12:00,12/16/17,aircraft3,1.0,Flying Solo
