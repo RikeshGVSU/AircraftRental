@@ -8,8 +8,10 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.StringTokenizer;
 
 import javax.swing.ButtonGroup;
+import javax.swing.ButtonModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -47,6 +49,8 @@ public class RentalFrame extends JFrame{
 
 		createControlPanel();
 		setSize(800,500);
+		selectNext.setEnabled(false);
+		update.setEnabled(false);
 		
 		
 	}
@@ -107,12 +111,24 @@ public class RentalFrame extends JFrame{
 					
 				}
 				else JOptionPane.showMessageDialog(null, "Input something to search");
+				submit.setEnabled(false);
 				
 			}
 			else if (event.getSource() == selectNext) {
 				if (i < searchResults.size() - 1){
 					i++;
 					details.setText(searchResults.get(i).toString());
+					StringTokenizer st = new StringTokenizer(searchResults.get(i).toString(),",");
+					nameInput.setText(st.nextToken());
+					startTimeInput.setText(st.nextToken());
+					endTimeInput.setText(st.nextToken());
+					flightDateInput.setText(st.nextToken());
+					comboBox.setSelectedItem(st.nextToken());
+					st.nextToken();
+					String checkRedio = st.nextToken();
+					if (checkRedio ==  "Flying Solo \n") solo.setSelected(true);
+					else withInstructor.setSelected(true);
+					
 				}
 				else {
 					JOptionPane.showMessageDialog(null, "That was the last value");
@@ -164,6 +180,7 @@ public class RentalFrame extends JFrame{
 				details.setText("");
 				selectNext.setEnabled(false);
 				update.setEnabled(false);
+				submit.setEnabled(true);
 			}
 		}
 	}
