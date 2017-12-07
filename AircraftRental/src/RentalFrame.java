@@ -36,7 +36,6 @@ public class RentalFrame extends JFrame{
 	private ButtonGroup group;
 	private JTextArea details;
 	private JPanel panel1, panel2, panel3, panel4, panel5, panel6, panel7, panel8, panel9;
-	String filename = "RentalDetails.txt";
 	
 	private RentalManager manager;
 	
@@ -75,6 +74,8 @@ public class RentalFrame extends JFrame{
 						fs.calculate();
 						try {
 							manager.add(fs);
+							clear();
+							details.setText("Data added: " + fs.toString() );
 						} catch (IOException e) {
 							e.printStackTrace();
 						}
@@ -84,6 +85,8 @@ public class RentalFrame extends JFrame{
 						wi.calculate();
 						try {
 							manager.add(wi);
+							clear();
+							details.setText("Data added: " + wi.toString() );
 						} catch (IOException e) {
 							e.printStackTrace();
 						}
@@ -126,7 +129,7 @@ public class RentalFrame extends JFrame{
 					comboBox.setSelectedItem(st.nextToken());
 					st.nextToken();
 					String checkRedio = st.nextToken();
-					if (checkRedio ==  "Flying Solo \n") solo.setSelected(true);
+					if (checkRedio.equals("Flying Solo\n")) solo.setSelected(true);
 					else withInstructor.setSelected(true);
 					
 				}
@@ -171,18 +174,37 @@ public class RentalFrame extends JFrame{
 				}
 				else JOptionPane.showMessageDialog(null, "Some Fields are missing");
 			}
+			
+			
+//			else if (event.getSource() == delete) {
+//				Boolean conformation;
+//				try {
+//					conformation = manager.delete(searchResults.get(i).toString());
+//				} catch (IOException e) {
+//					e.printStackTrace();
+//				}
+//				if (conformation = true ) details.setText("Data Deleted");
+//				else details.setText("Data Could not be deleted");
+//			}
+			
+			
 			else if (event.getSource() == clear) {
-				nameInput.setText("");
-				group.clearSelection();
-				startTimeInput.setText("");
-				endTimeInput.setText("");
-				flightDateInput.setText("");
-				details.setText("");
-				selectNext.setEnabled(false);
-				update.setEnabled(false);
-				submit.setEnabled(true);
+				clear();
 			}
 		}
+		
+	}
+	
+	public void clear() {
+		nameInput.setText("");
+		group.clearSelection();
+		startTimeInput.setText("");
+		endTimeInput.setText("");
+		flightDateInput.setText("");
+		details.setText("");
+		selectNext.setEnabled(false);
+		update.setEnabled(false);
+		submit.setEnabled(true);
 	}
 	
 	public void createControlPanel()

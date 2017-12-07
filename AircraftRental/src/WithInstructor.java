@@ -1,11 +1,12 @@
-import javax.swing.JOptionPane;
 
 public class WithInstructor extends Flying {
 	
-public WithInstructor(String name, String startTime, String endTime, String flyingDate, String airCraft) {
-	super(name, startTime, endTime, flyingDate, airCraft, totalFee);	
-	JOptionPane.showMessageDialog(null, "WithInstructor class constructor");
+	//WithInstructor class constructor
+	public WithInstructor(String name, String startTime, String endTime, String flyingDate, String airCraft) {
+		super(name, startTime, endTime, flyingDate, airCraft, totalFee);	
 	}
+	
+	// this method calculates the total fee of the rental while flying with Instructor
 	public String calculate() {
 		totalFee = 2;
 		return "need some code here";

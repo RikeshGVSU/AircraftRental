@@ -1,11 +1,11 @@
-import javax.swing.JOptionPane;
 
 public class FlyingSolo extends Flying {
 	
+	//FlyingSolo class constructor
 	public FlyingSolo(String name, String startTime, String endTime, String flyingDate, String airCraft) {
 		super(name, startTime, endTime, flyingDate, airCraft, totalFee);	
-		JOptionPane.showMessageDialog(null, "Flying Solo class constructor");
 	}
+	//This method calculates the total fee of the rental while flying solo
 	public String calculate() {
 		totalFee = 1;
 		return "need some code here";

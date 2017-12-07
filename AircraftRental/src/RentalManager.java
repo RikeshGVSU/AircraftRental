@@ -10,12 +10,8 @@ import java.util.Scanner;
 import java.util.StringTokenizer;
 
 public class RentalManager {
-	private ArrayList<Flying> rentalLog;
 	
-	public RentalManager() {
-		rentalLog = new ArrayList<Flying>();
-	}
-
+	
 	public void add(FlyingSolo fs) throws IOException {
 		BufferedWriter bw = new BufferedWriter( new FileWriter("rentalLog.txt",true) );	
 		   		
@@ -46,7 +42,7 @@ public class RentalManager {
   			
   			StringTokenizer st = new StringTokenizer(record,",");
   			if( record.contains(data) ) {
-  				searchResults.add( st.nextToken()+","+st.nextToken()+","+st.nextToken()+","+st.nextToken()+","+st.nextToken()+","+st.nextToken()+","+st.nextToken()+" \n");
+  				searchResults.add( st.nextToken()+","+st.nextToken()+","+st.nextToken()+","+st.nextToken()+","+st.nextToken()+","+st.nextToken()+","+st.nextToken()+"\n");
   			}
  		
   		}
@@ -63,9 +59,35 @@ public class RentalManager {
 		BufferedReader br = new BufferedReader( new FileReader(db) );
 		BufferedWriter bw = new BufferedWriter( new FileWriter(tempDB) );
 		
-		while( (record = br.readLine() ) != null ) {    			
-			if(record.contains(data)) {
+		while( (record = br.readLine() ) != null ) { 
+			if(data.contains(record)) {
 				bw.write(newData);
+			} else {
+			
+				bw.write(record);	
+			}    			
+			bw.flush();
+			bw.newLine();
+		}
+		
+		bw.close();
+		br.close();    		
+		db.delete();    		
+		boolean success = tempDB.renameTo(db);
+		return success;
+		
+	}
+	
+	public boolean delete(String data) throws IOException {
+		String record;
+		File db = new File("rentalLog.txt");
+		File tempDB = new File("rentalLog_temp.txt");
+		BufferedReader br = new BufferedReader( new FileReader(db) );
+		BufferedWriter bw = new BufferedWriter( new FileWriter(tempDB) );
+		
+		while( (record = br.readLine() ) != null ) { 
+			if(data.contains(record)) {
+				continue;
 			} else {
 			
 				bw.write(record);	
