@@ -1,5 +1,6 @@
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -53,6 +54,32 @@ public class RentalManager {
   		br.close();
 		return searchResults;
 
+	}
+	
+	public boolean update(String data, String newData) throws IOException {
+		String record;
+		File db = new File("rentalLog.txt");
+		File tempDB = new File("rentalLog_temp.txt");
+		BufferedReader br = new BufferedReader( new FileReader(db) );
+		BufferedWriter bw = new BufferedWriter( new FileWriter(tempDB) );
+		
+		while( (record = br.readLine() ) != null ) {    			
+			if(data.contains(record)) {
+				bw.write(newData);
+			} else {
+			
+				bw.write(record);	
+			}    			
+			bw.flush();
+			bw.newLine();
+		}
+		
+		bw.close();
+		br.close();    		
+		db.delete();    		
+		boolean success = tempDB.renameTo(db);
+		return success;
+		
 	}
 
 }

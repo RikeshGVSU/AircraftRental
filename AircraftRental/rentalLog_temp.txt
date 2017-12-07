@@ -1,0 +1,2 @@
+test1,2:00,3:00,2/3/4,aircraft2,1.0,Flying Solo
+test2,3:00,4:00,2/3/4,aircraft1,1.0,Flying Solo

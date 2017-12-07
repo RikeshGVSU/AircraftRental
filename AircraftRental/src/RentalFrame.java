@@ -53,6 +53,9 @@ public class RentalFrame extends JFrame{
 	
 	private class ButtonListener implements ActionListener {
 		
+		ArrayList<String> searchResults = new ArrayList<String>();
+		private int i;
+		
 		public void actionPerformed (ActionEvent event) {
 			if(event.getSource()== submit){
 				if(!nameInput.getText().equals("") && !startTimeInput.getText().equals("") &&  !endTimeInput.getText().equals("") && !flightDateInput.getText().equals("") )
@@ -91,18 +94,76 @@ public class RentalFrame extends JFrame{
 			}
 			else if (event.getSource() == history) {
 				if(!searchInput.getText().equals("")) {
-					
-					ArrayList<String> searchResults = new ArrayList<String>();
+					searchResults.clear();
 					try {
 						searchResults = manager.search(searchInput.getText());
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
 					details.setText(searchResults.toString());
+					selectNext.setEnabled(true);
+					update.setEnabled(true);
+					i = -1;
 					
 				}
 				else JOptionPane.showMessageDialog(null, "Input something to search");
 				
+			}
+			else if (event.getSource() == selectNext) {
+				if (i < searchResults.size() - 1){
+					i++;
+					details.setText(searchResults.get(i).toString());
+				}
+				else {
+					JOptionPane.showMessageDialog(null, "That was the last value");
+					i = -1;
+				}
+				
+			}
+			else if (event.getSource() == update) {
+				if(!nameInput.getText().equals("") && !startTimeInput.getText().equals("") &&  !endTimeInput.getText().equals("") && !flightDateInput.getText().equals("") )
+				{
+					String name = nameInput.getText();
+					String startTime = startTimeInput.getText();
+					String endTime = endTimeInput.getText();
+					String flightDate = flightDateInput.getText();
+					String airCraft = (String) comboBox.getSelectedItem();
+					Boolean conformation;
+					String newData = null;
+					
+					if (solo.isSelected()){
+						FlyingSolo fs = new FlyingSolo(name,startTime,endTime,flightDate, airCraft);
+						fs.calculate();
+						newData = fs.toString();
+					}
+					else if (withInstructor.isSelected()){
+						WithInstructor wi = new WithInstructor(name,startTime,endTime,flightDate, airCraft);
+						wi.calculate();
+						newData = wi.toString();
+					}
+					else JOptionPane.showMessageDialog(null, "Select Flying solo or with Instructor");
+					if (newData != null) {
+						try {
+							conformation = manager.update(searchResults.get(i).toString(), newData);
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+						if (conformation = true ) details.setText("Data Updated");
+						else details.setText("Data Could nopt be updated");
+					}
+					else JOptionPane.showMessageDialog(null, "newData has null value");
+				}
+				else JOptionPane.showMessageDialog(null, "Some Fields are missing");
+			}
+			else if (event.getSource() == clear) {
+				nameInput.setText("");
+				group.clearSelection();
+				startTimeInput.setText("");
+				endTimeInput.setText("");
+				flightDateInput.setText("");
+				details.setText("");
+				selectNext.setEnabled(false);
+				update.setEnabled(false);
 			}
 		}
 	}
