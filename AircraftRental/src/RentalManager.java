@@ -46,7 +46,7 @@ public class RentalManager {
   			
   			StringTokenizer st = new StringTokenizer(record,",");
   			if( record.contains(data) ) {
-  				searchResults.add("| "+st.nextToken()+"	"+st.nextToken()+" "+st.nextToken()+" "+st.nextToken()+" "+st.nextToken()+" "+st.nextToken()+" "+st.nextToken()+" |\n");
+  				searchResults.add( st.nextToken()+","+st.nextToken()+","+st.nextToken()+","+st.nextToken()+","+st.nextToken()+","+st.nextToken()+","+st.nextToken()+" \n");
   			}
  		
   		}
@@ -64,7 +64,7 @@ public class RentalManager {
 		BufferedWriter bw = new BufferedWriter( new FileWriter(tempDB) );
 		
 		while( (record = br.readLine() ) != null ) {    			
-			if(data.contains(record)) {
+			if(record.contains(data)) {
 				bw.write(newData);
 			} else {
 			
